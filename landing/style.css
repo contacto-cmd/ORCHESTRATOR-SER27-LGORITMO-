@@ -1,0 +1,40 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #0a0a0a;
+  color: #f0f0f0;
+}
+
+header {
+  background: #111;
+  padding: 20px;
+  text-align: center;
+}
+
+header img {
+  height: 80px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #f0f0f0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer {
+  background: #111;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9em;
+}
