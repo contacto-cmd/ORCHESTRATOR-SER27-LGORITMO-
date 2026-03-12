@@ -4,49 +4,14 @@
   <meta charset="UTF-8">
   <title>SER27 LGORITMO — Sovereign Orchestrator</title>
   <style>
-    body {
-      background: #0a0a0a;
-      color: #e0e0e0;
-      font-family: Arial, sans-serif;
-      margin: 0;
-    }
-    header, footer {
-      background: #111;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 2px solid #00bfff;
-    }
-    header h1 {
-      margin: 0;
-      color: #00bfff;
-    }
-    .container {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      grid-template-rows: auto 1fr auto;
-      height: 100vh;
-    }
-    .panel {
-      border: 1px solid #333;
-      padding: 15px;
-      margin: 5px;
-      background: #1a1a1a;
-    }
-    .panel h2 {
-      color: #00bfff;
-      margin-top: 0;
-    }
-    button {
-      background: #00bfff;
-      color: #000;
-      border: none;
-      padding: 10px 15px;
-      margin: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0099cc;
-    }
+    body { background:#0a0a0a; color:#e0e0e0; font-family:Arial,sans-serif; margin:0; }
+    header, footer { background:#111; padding:20px; text-align:center; border-bottom:2px solid #00bfff; }
+    header h1 { margin:0; color:#00bfff; }
+    .container { display:grid; grid-template-columns:1fr 2fr 1fr; grid-template-rows:auto 1fr auto; height:100vh; }
+    .panel { border:1px solid #333; padding:15px; margin:5px; background:#1a1a1a; }
+    .panel h2 { color:#00bfff; margin-top:0; }
+    button { background:#00bfff; color:#000; border:none; padding:10px 15px; margin:5px; cursor:pointer; }
+    button:hover { background:#0099cc; }
   </style>
 </head>
 <body>
@@ -87,23 +52,41 @@
   <script>
     async function deployBackend() {
       document.getElementById("backendStatus").innerText = "Deploying backend...";
-      setTimeout(() => document.getElementById("backendStatus").innerText = "Railway: Online", 2000);
+      const res = await fetch("/deploy", { method: "POST" });
+      const data = await res.json();
+      document.getElementById("backendStatus").innerText = "Railway: " + data.status;
     }
+
     async function refreshFrontend() {
       document.getElementById("frontendStatus").innerText = "Refreshing frontend...";
-      setTimeout(() => document.getElementById("frontendStatus").innerText = "Vercel: Build Successful", 2000);
+      const res = await fetch("/refresh", { method: "POST" });
+      const data = await res.json();
+      document.getElementById("frontendStatus").innerText = "Vercel: " + data.status;
     }
+
     async function verifyDNS() {
-      alert("DNS verification triggered via Cloudflare API.");
+      const res = await fetch("/dns");
+      const data = await res.json();
+      alert("DNS status: " + data.status);
     }
+
     async function logIncident() {
       const logs = document.getElementById("incidentLogs");
       const entry = document.createElement("p");
       entry.innerText = "Incident logged at " + new Date().toLocaleString();
       logs.appendChild(entry);
+
+      await fetch("/incident", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ description: entry.innerText })
+      });
     }
+
     async function certifyDocument() {
-      alert("Document certification triggered via Throne Protocolo.");
+      const res = await fetch("/certify", { method: "POST" });
+      const data = await res.json();
+      alert("Certification result: " + data.result);
     }
   </script>
 </body>
