@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "orchestrator-ser27-lgoritmo",
+  "compatibility_date": "2026-04-11",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "backend"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
